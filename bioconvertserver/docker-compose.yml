@@ -1,0 +1,65 @@
+version: '3'
+services:
+  db:
+    image: postgres
+    env_file:
+      - ./resources/default.ini
+      - ./resources/local.ini
+    volumes:
+      - /opt/bioconvertserver/postgresql/data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  # Redis
+  redis:
+    image: redis:2.8.19
+    hostname: redis
+
+  # RabbitMQ
+  rabbit:
+    hostname: rabbit
+    image: rabbitmq:3.6.0
+    env_file:
+      - ./resources/default.ini
+      - ./resources/local.ini
+    ports:
+      - "5672:5672"  # we forward this port because it's useful for debugging
+      - "15672:15672"  # here, we can access rabbitmq management plugin
+
+  # Web server (Apache, django, gunicorn)
+  web:
+    env_file:
+      - ./resources/default.ini
+      - ./resources/local.ini
+    build: .
+    command: /usr/sbin/apachectl -DFOREGROUND
+    volumes:
+      - .:/code
+      - ./certs:/etc/apache2/ssl
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - "8000:8000"
+      - "8080:80"
+      - "443:443"
+    depends_on:
+      - db
+
+  # Celery worker
+  worker:
+    env_file:
+      - ./resources/default.ini
+      - ./resources/local.ini
+    build:
+      context: .
+      dockerfile: Dockerfile-bioconvert
+    entrypoint: /bin/bash
+    command: ./resources/run_celery.sh
+    volumes:
+      - .:/code
+      - /etc/localtime:/etc/localtime:ro
+    links:
+      - db
+      - rabbit
+      - redis
+    depends_on:
+      - rabbit

@@ -1,0 +1,14 @@
+easydev>=0.9.36
+colorlog
+pandas
+biopython
+mappy
+matplotlib
+networkx
+pyyaml
+pysam
+pandoc
+pyexcel
+pyexcel-ods3
+pyexcel-xls
+xlrd

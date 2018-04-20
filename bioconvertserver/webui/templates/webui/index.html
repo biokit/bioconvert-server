@@ -1,0 +1,78 @@
+{% extends 'base.html'%}
+{%load static%}
+{% load i18n%}
+
+{% block css%}
+{{ block.super }}
+<link href="{%static 'css/index.css'%}" rel="stylesheet">
+{%endblock%}
+{% block title%}BioConvert{%endblock%}
+{% block subtitle%}Convert your life science data from one format to another{%endblock%}
+{% block content%}
+<ul class="nav nav-tabs justify-content-center nav-tabs-animated{% if is_fresh%} full-icon{%endif%}" id="myTab" role="tablist">
+    <li class="nav-item from-host">
+        <a class="nav-link disabled" href="#"><i class="fa"></i><span>From : </span></a>
+    </li>
+    <li class="nav-item{% if is_file%} active{%endif%}">
+        <a class="nav-link" data-toggle="tab" href="#file" role="tab" aria-controls="file">
+            <i class="fa fa-file" title="From a file"></i> <span>File</span>
+        </a>
+    </li>
+    <li class="nav-item{% if is_url%} active{%endif%}">
+        <a class="nav-link" data-toggle="tab" href="#url" role="tab" aria-controls="url">
+            <i class="fa fa-link" title="From an url"></i> <span>URL</span>
+        </a>
+    </li>
+    <li class="nav-item{% if is_identifier%} active{%endif%}">
+        <a class="nav-link" data-toggle="tab" href="#identifier" role="tab" aria-controls="identifier">
+            <i class="fa fa-qrcode" title="Retrieve already done conversion"></i> <span>Identifier</span>
+        </a>
+    </li>
+</ul>
+<br/>
+<div class="tab-content">
+    <div class="tab-pane{% if is_file%} active{%endif%}" id="file" role="tabpanel">
+        {%trans 'Convert' as submit_text%}
+        {%include 'webui/form_tab.html' with form=form_file submit_text=submit_text %}
+    </div>
+    <div class="tab-pane{% if is_url%} active{%endif%}" id="url" role="tabpanel">
+        {%trans 'Convert' as submit_text%}
+        {%include 'webui/form_tab.html' with form=form_url submit_text=submit_text %}
+    </div>
+    <div class="tab-pane{% if is_identifier%} active{%endif%}" id="identifier" role="tabpanel">
+        {%trans 'Open' as submit_text%}
+        {%include 'webui/form_tab.html' with form=form_identifier submit_text=submit_text %}
+    </div>
+</div>
+<script>
+$('#myTab a').on('click', function (e) {
+    //e.preventDefault();
+    //$(this).tab('show');
+    //return false;
+    $('#myTab').removeClass("full-icon");
+})
+
+
+
+
+</script>
+<br/>
+<div class="col-xs-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
+    <div class="card">
+        <div class="card-header">
+            Conversion graph
+        </div>
+        <div class="card-block">
+            <a href="https://raw.githubusercontent.com/biokit/bioconvert/master/doc/conversion.png" target="_blank">
+                <img src="https://raw.githubusercontent.com/biokit/bioconvert/master/doc/conversion.png"
+                     class="img-fluid"
+                     alt="conversion graph">
+            </a>
+        </div>
+    </div>
+    <br/>
+    <span class="pull-right">
+        REST API Available <a href="/api">here</a>
+    </span>
+</div>
+{%endblock%}

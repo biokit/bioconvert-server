@@ -1,0 +1,13 @@
+{% load bootstrap4 %}
+{% load i18n%}
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <form action="" method="post" class="form" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% bootstrap_form form layout='horizontal' %}
+            {% buttons %}
+            <button type="submit" class="btn btn-primary pull-right">{{submit_text}}</button>
+            {% endbuttons %}
+        </form>
+    </div>
+</div>

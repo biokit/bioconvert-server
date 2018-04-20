@@ -1,0 +1,58 @@
+{% extends 'base.html'%}
+{%load static%}
+{% load i18n%}
+
+{% block css%}
+{{ block.super }}
+<link href="{%static 'css/index.css'%}" rel="stylesheet">
+{%endblock%}
+{% block js%}
+{{ block.super }}
+<script>function getIdentifier(){return "{{identifier}}"}function getStatus(){return "{{status}}"}</script>
+<script src="{%static 'js/results.js'%}"></script>
+{%endblock%}
+{% block title%}BioConvert{%endblock%}
+{% block subtitle%}Convert your life science data from one format to another{%endblock%}
+{% block content%}
+<div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
+        <div class="card">
+            <div class="card-block text-center">
+                <img class="img-fluid" src="http://chart.googleapis.com/chart?cht=qr&chs=128x128&chl={{absolut_url}}"
+                     alt="qr code">
+                <p class="card-text">QR Code to this conversion</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-md-8 col-lg-10">
+        <table class="table table-hover">
+            <tr>
+                <th style="width:1px">Input&nbsp;filename</th>
+                <td>{{input_filename}}</td>
+            </tr>
+            <tr>
+                <th>Input&nbsp;format</th>
+                <td>{{input_format}}</td>
+            </tr>
+            <tr>
+                <th>Output&nbsp;format</th>
+                <td>{{output_format}}</td>
+            </tr>
+            <tr id="done" style="display:none">
+                <th>Output link</th>
+                <td><a href="{{output_url}}">{{output_url}}</a></td>
+            </tr>
+            <tr id="computing" style="display:none">
+                <th>Status</th>
+                <td>Conversion is beeing made. This page will be updated as soon as the conversion is completed. You can
+                    keep this link and come back later
+                </td>
+            </tr>
+            <tr id="error" style="display:none">
+                <th>Status</th>
+                <td><p>Conversion have failed.</p><p class="text-danger">{{error_message}}</p></td>
+            </tr>
+        </table>
+    </div>
+</div>
+{%endblock%}

@@ -1,0 +1,7 @@
+django
+django-crontab==0.7.1
+bioconvert
+django-bootstrap4
+psycopg2-binary
+celery
+redis

@@ -1,0 +1,25 @@
+.nav-tabs-animated.full-icon .nav-item a .fa {
+    font-size: 12em;
+}
+.nav-tabs-animated .nav-item a .fa {
+    font-size: 1em;
+}
+.nav-tabs-animated.full-icon {
+    border-bottom: 0px;
+    margin-top: 5em;
+}
+.full-icon .nav-item a .fa+span {
+    font-size: 0;
+    font-style:italic;
+}
+.full-icon .from-host{
+    display:none;
+    font-size: 0;
+}
+.nav-tabs-animated,
+.nav-tabs-animated .fa,
+.nav-tabs-animated .fa+span{
+  -webkit-transition: all .5s ease;
+  -moz-transition: all .5s ease;
+  transition: all .5s ease;
+}
